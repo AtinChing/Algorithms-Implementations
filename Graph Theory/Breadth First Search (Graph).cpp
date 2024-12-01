@@ -2,8 +2,10 @@
 #include <deque>
 #include <set>
 #include <iostream>
+#include <algorithm>
 using std::deque;
 using std::set;
+using std::vector;
 // Assumes graph nodes have unique values only
 GraphNode* BreadthFirstSearch(GraphNode* node, int val, set<int> visited = {}){ // Presuming its a binary tree, so no binary search tree property
     deque<GraphNode*> queue = {node}; // Queue contains a (dynamic) list of GraphNode pointers
@@ -16,15 +18,15 @@ GraphNode* BreadthFirstSearch(GraphNode* node, int val, set<int> visited = {}){ 
         for(auto nodeVisit : nodeToSearch->adj){
             if(visited.find(nodeVisit->val) == visited.end()){
                 visited.insert(nodeVisit->val);
+                queue.push_back(nodeVisit);
             }
             else{continue;}
-            queue.push_back(nodeVisit);
+            
         }
         
     }
     return nullptr;
-}   
-
+}
 int main(){
     GraphNode root(1);
     GraphNode node1(2);
