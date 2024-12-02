@@ -3,18 +3,19 @@
 #include <iostream>
 #include <set>
 using std::set;
+using namespace std;
 // DFS for trees
 TreeNode* DepthFirstSearchTree(TreeNode* node, int val){ // Presuming its a binary tree, so no binary search tree property
-    if(node->val == val){ 
+    if(node->val == val){
         return node;
     }
-    if(node->left) {
-        auto res = DepthFirstSearchTree(node->left, val);
-        if(res) return res;
+    if(node->left != nullptr) {
+        auto res1 = DepthFirstSearchTree(node->left, val);
+        if(res1) return res1;
     }
-    if(node->right) {
-        auto res = DepthFirstSearchTree(node->right, val);
-        if(res) return res;
+    if(node->right !=  nullptr) {
+        auto res2 = DepthFirstSearchTree(node->right, val);
+        if(res2) return res2;
     }
     return nullptr;
 }
@@ -49,7 +50,7 @@ int main(){
     root.addEdge(&node1);
     node1.addEdge(&node2);
     node2.addEdge(&node3);
-    auto result = DepthFirstSearchGraph(&root, 4);
+    auto result = DepthFirstSearchGraph(&root, 5);
     if(result != nullptr){
         std::cout << "Found result!" << std::endl;
     }
@@ -63,8 +64,8 @@ int main(){
     root2.left->right = new TreeNode(5);
     root2.right->left = new TreeNode(6);
     root2.right->right = new TreeNode(7);
-    auto result2 = DepthFirstSearchTree(&root2, 10);
-    if(result != nullptr){
+    auto result2 = DepthFirstSearchTree(&root2, 20);
+    if(result2 != nullptr){
         std::cout << "Found result!" << std::endl;
     }
     else{
