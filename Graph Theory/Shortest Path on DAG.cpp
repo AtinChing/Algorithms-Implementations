@@ -1,32 +1,74 @@
-#include "Topological Sort.cpp"
+
 #include "Data Structures used/WeightedGraphNode.h"
 #include <vector>
+#include <set>
+#include <unordered_map>
+#include <deque>
 using namespace std;
-vector<int> ShortestPathDAG(auto ordering){
+void TopSort(GraphNode* node, vector<GraphNode*>* ordering, set<int> *visited){
+    for(auto nodeVisit : node->adj){
+        if(visited->find(nodeVisit.first->val) == visited->end()){
+            visited->insert(nodeVisit.first->val);
+            TopSort(nodeVisit.first, ordering, visited);
+        }
+    }
+    ordering->insert(ordering->begin(), node);
+}   
+vector<int> ShortestPathDAG(vector<GraphNode*> ordering, int dist[], int dist_len, set<int> visited = {}){
+    dist[ordering[0]->val] = 0; // dist[i] shows lowest distance to node with val i
+    deque<GraphNode*> queue = {ordering[0]};
+    GraphNode* prev[dist_len] = {nullptr};
+    while(queue.size() > 0){
+        auto curNode = queue[0];
+        queue.pop_front();
+        for(pair<GraphNode*, int> nodePair : curNode->adj){
+            auto nodeTo = nodePair.first;
+            auto distToNode = nodePair.second;
+            if(dist[nodeTo->val] > distToNode){
+                dist[nodeTo->val] = distToNode;
+                queue.push_back(nodeTo);
+
+            }
+        }
+    }
+    
 
 }
 
 int main(){
-    GraphNode* A = new GraphNode(3);
-    GraphNode* B = new GraphNode(11);
-    GraphNode* C = new GraphNode(6);
-    GraphNode* D = new GraphNode(5);
-    GraphNode* E = new GraphNode(9);
-    GraphNode* F = new GraphNode(1);
-    GraphNode* G = new GraphNode(2);
-    GraphNode* H = new GraphNode(0);
+    // Must be guarantee that the input graph has no cycles, as a DAG can't have cycles anyway.
+
+    GraphNode* root = new GraphNode(0);
+    GraphNode* B = new GraphNode(1);
+    GraphNode* C = new GraphNode(2);
+    GraphNode* D = new GraphNode(3);
+    GraphNode* E = new GraphNode(4);
+    GraphNode* F = new GraphNode(5);
+    GraphNode* G = new GraphNode(6);
+    GraphNode* H = new GraphNode(7);
 
     // Add the edges
-    A->addEdge(B, 4);
-    B->addEdge(A, 3);
-    B->addEdge(C, 8);
-    B->addEdge(D, -4);
-    B->addEdge(E, -4);
-    D->addEdge(B, 5);
-    D->addEdge(F, 2);
-    E->addEdge(F, 1);
+    root->addEdge(B, 3);
+    root->addEdge(C, 6);
+    B->addEdge(C, 4);
+    B->addEdge(D, 4);
+    B->addEdge(E, 11);
+    C->addEdge(D, 8);
+    C->addEdge(G, 11);
+    D->addEdge(E, -4);
+    D->addEdge(G, 2);
+    D->addEdge(F, 5);
     E->addEdge(H, 9);
-    F->addEdge(G, 11);
-    G->addEdge(E, 2);
+    F->addEdge(H, 1);
+    G->addEdge(H, 2);
+    vector<GraphNode*> order;
+    int distance[order.size()];
+    for(int i = 0; i < order.size(); i++){
+        distance[i] = __INT_MAX__;
+    }
+    set<int> visited;
+    TopSort(root, &order, &visited);
+    auto path = ShortestPathDAG(order, distance, order.size());
+
     return 0;
 }
