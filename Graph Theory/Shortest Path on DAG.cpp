@@ -1,7 +1,7 @@
-
 #include "Data Structures used/WeightedGraphNode.h"
 #include <vector>
 #include <set>
+#include <iostream>
 #include <unordered_map>
 #include <deque>
 using namespace std;
@@ -14,7 +14,7 @@ void TopSort(GraphNode* node, vector<GraphNode*>* ordering, set<int> *visited){
     }
     ordering->insert(ordering->begin(), node);
 }   
-vector<int> ShortestPathDAG(vector<GraphNode*> ordering, int dist[], int dist_len, set<int> visited = {}){
+vector<GraphNode*> ShortestPathDAG(vector<GraphNode*> ordering, int dist[], int dist_len, set<int> visited = {}){
     dist[ordering[0]->val] = 0; // dist[i] shows lowest distance to node with val i
     deque<GraphNode*> queue = {ordering[0]};
     GraphNode* prev[dist_len] = {nullptr};
@@ -27,11 +27,19 @@ vector<int> ShortestPathDAG(vector<GraphNode*> ordering, int dist[], int dist_le
             if(dist[nodeTo->val] > distToNode){
                 dist[nodeTo->val] = distToNode;
                 queue.push_back(nodeTo);
-
+                prev[nodeTo->val] = curNode; 
             }
         }
     }
-    
+    // path reconstruction
+    auto curNode = ordering[dist_len-1];
+    vector<GraphNode*> path;
+    while(prev[curNode->val] != nullptr){
+        path.insert(path.begin(), curNode);
+        curNode = prev[curNode->val];
+    }
+    path.insert(path.begin(), curNode);
+    return path;    
 
 }
 
@@ -69,6 +77,10 @@ int main(){
     set<int> visited;
     TopSort(root, &order, &visited);
     auto path = ShortestPathDAG(order, distance, order.size());
-
+    cout << endl;
+    cout << "path found from start to end node." << endl;
+    for(int i = 0; i < order.size(); i++){
+        cout << path[i]->val << " ";
+    }
     return 0;
 }
