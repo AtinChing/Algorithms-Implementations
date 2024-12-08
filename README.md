@@ -1,3 +1,33 @@
 # Algorithms Implementations
 Contains implementations of many different algorithms (sorting, searching, graph theory, linear programming, DP, greedy, combinatorics (optimization), string) in C++.
 Any use of abstract data types in this repository makes use of data structures I have previously defined and implemented in my [Data Structures Implementations](https://github.com/AtinChing/Data-Structures-Implementations) repository.
+Algorithm implementation status will be shown by ✅❌➖.
+
+List of algorithms contained in this repository:
+### Searching:
+- Linear search
+- Binary search
+- Interpolation search
+- Jump search
+- Exponential search
+- Ternary search
+- Fibonacci search
+### Sorting:
+- Bubble sort
+- Quick sort
+- Selection sort
+- Insertion sort
+- Radix sort
+- Shell sort
+- Heap sort
+- Merge sort
+- Bucket sort
+- Tim sort
+- Jump sort
+- Bozo sort
+### Graph Theory:
+- DFS (on graph and grid)
+- BFS (on graph and grid)
+- BFS shortest path on a graph
+- BFS shortest path on a grid
+- Topological sort
