@@ -13,10 +13,10 @@ void TopSort(GraphNode* node, vector<GraphNode*>* ordering, set<int> *visited){
         }
     }
     ordering->insert(ordering->begin(), node);
-}   
-vector<GraphNode*> ShortestPathDAG(vector<GraphNode*> ordering, int dist[], int dist_len, set<int> visited = {}){
-    dist[ordering[0]->val] = 0; // dist[i] shows lowest distance to node with val i
-    deque<GraphNode*> queue = {ordering[0]};
+}
+vector<GraphNode*> ShortestPathDAG(vector<GraphNode*>* ordering, int dist[], int dist_len, set<int> visited = {}){
+    dist[(ordering->at(0))->val] = 0; // dist[i] shows lowest distance to node with val i
+    deque<GraphNode*> queue = {ordering->at(0)};
     GraphNode* prev[dist_len] = {nullptr};
     while(queue.size() > 0){
         auto curNode = queue[0];
@@ -24,7 +24,7 @@ vector<GraphNode*> ShortestPathDAG(vector<GraphNode*> ordering, int dist[], int 
         for(pair<GraphNode*, int> nodePair : curNode->adj){
             auto nodeTo = nodePair.first;
             auto distToNode = nodePair.second;
-            if(dist[nodeTo->val] > distToNode){
+            if(dist[nodeTo->val] > distToNode+dist[curNode->val]){
                 dist[nodeTo->val] = distToNode;
                 queue.push_back(nodeTo);
                 prev[nodeTo->val] = curNode; 
@@ -32,7 +32,7 @@ vector<GraphNode*> ShortestPathDAG(vector<GraphNode*> ordering, int dist[], int 
         }
     }
     // path reconstruction
-    auto curNode = ordering[dist_len-1];
+    auto curNode = ordering->at(dist_len-1);
     vector<GraphNode*> path;
     while(prev[curNode->val] != nullptr){
         path.insert(path.begin(), curNode);
@@ -63,23 +63,23 @@ int main(){
     B->addEdge(E, 11);
     C->addEdge(D, 8);
     C->addEdge(G, 11);
-    D->addEdge(E, -4);
+    //D->addEdge(E, -4);
     D->addEdge(G, 2);
     D->addEdge(F, 5);
     E->addEdge(H, 9);
     F->addEdge(H, 1);
     G->addEdge(H, 2);
     vector<GraphNode*> order;
-    int distance[order.size()];
-    for(int i = 0; i < order.size(); i++){
-        distance[i] = __INT_MAX__;
-    }
     set<int> visited;
     TopSort(root, &order, &visited);
-    auto path = ShortestPathDAG(order, distance, order.size());
+    int distance[order.size()];
+    for(int i = 0; i < order.size(); i++){
+        distance[i] = 1000000;
+    }
+    auto path = ShortestPathDAG(&order, distance, order.size());
     cout << endl;
     cout << "path found from start to end node." << endl;
-    for(int i = 0; i < order.size(); i++){
+    for(int i = 0; i < path.size(); i++){
         cout << path[i]->val << " ";
     }
     return 0;
