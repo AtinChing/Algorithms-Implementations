@@ -25,7 +25,7 @@ vector<GraphNode*> ShortestPathDAG(vector<GraphNode*>* ordering, int dist[], int
             auto nodeTo = nodePair.first;
             auto distToNode = nodePair.second;
             if(dist[nodeTo->val] > distToNode+dist[curNode->val]){
-                dist[nodeTo->val] = distToNode;
+                dist[nodeTo->val] = distToNode+dist[curNode->val];
                 queue.push_back(nodeTo);
                 prev[nodeTo->val] = curNode; 
             }
@@ -77,8 +77,7 @@ int main(){
         distance[i] = 1000000;
     }
     auto path = ShortestPathDAG(&order, distance, order.size());
-    cout << endl;
-    cout << "path found from start to end node." << endl;
+    cout << "path found from start to end node of size " << distance[order.size()-1] << "." << endl;
     for(int i = 0; i < path.size(); i++){
         cout << path[i]->val << " ";
     }
