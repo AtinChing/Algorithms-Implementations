@@ -31,19 +31,19 @@ List of algorithms contained in this repository (so far):
 - BFS shortest path on a graph ✅
 - BFS shortest path on a grid ✅
 - Topological sort ✅
-- Shortest/longest path on a DAG ➖
+- Shortest/longest path on a DAG ✅
 - Dijkstra's ❌
-- Bellman-Ford ❌
+- Bellman-Ford ➖
 - A* Search ❌
 - Floyd-Warshall ❌
 - Bridges ❌
 - Articulation points ❌
 - Tarjans Strongly Connected Components ❌
-- Kahn's ❌
+- Kahn's ➖
 - Nearest neighbor ❌
 - Traveling Salesman Problem ❌
 - Eulerian path ❌
-- Kruskal's ❌
+- Kruskal's ➖
 - Prim's (Lazy version) ❌ 
 - Eager Prim's ❌
 - Max Flow Ford Fulkerson ❌
