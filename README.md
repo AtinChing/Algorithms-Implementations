@@ -33,7 +33,7 @@ List of algorithms contained in this repository (so far):
 - Topological sort ✅
 - Shortest/longest path on a DAG ✅
 - Dijkstra's ❌
-- Bellman-Ford ➖
+- Bellman-Ford ✅
 - A* Search ❌
 - Floyd-Warshall ❌
 - Bridges ❌
