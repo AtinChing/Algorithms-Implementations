@@ -11,7 +11,7 @@ List of algorithms contained in this repository (so far):
 - Jump search ❌
 - Exponential search ❌
 - Ternary search ❌
-- Fibonacci search ❌
+- Fibonacci search ✅
 ### Sorting:
 - Bubble sort ✅
 - Quick sort ❌
