@@ -10,7 +10,7 @@ List of algorithms contained in this repository (so far):
 - Interpolation search ❌
 - Jump search ✅
 - Exponential search ✅
-- Ternary search ❌
+- Ternary search ➖
 - Fibonacci search ✅
 ### Sorting:
 - Bubble sort ✅
@@ -23,7 +23,6 @@ List of algorithms contained in this repository (so far):
 - Merge sort ❌
 - Bucket sort ❌
 - Tim sort ❌
-- Jump sort ❌
 - Bozo sort ❌
 ### Graph Theory:
 - DFS (on graph and grid) ✅
