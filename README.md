@@ -9,7 +9,7 @@ List of algorithms contained in this repository (so far):
 - Binary search ✅
 - Interpolation search ❌
 - Jump search ✅
-- Exponential search ❌
+- Exponential search ✅
 - Ternary search ❌
 - Fibonacci search ✅
 ### Sorting:
@@ -30,20 +30,20 @@ List of algorithms contained in this repository (so far):
 - BFS (on graph and grid) ✅
 - BFS shortest path on a graph ✅
 - BFS shortest path on a grid ✅
-- Topological sort ✅
-- Shortest/longest path on a DAG ✅
+- Topological sort (typical DFS) ✅
+- Shortest/longest path on a DAG algorithm ✅
 - Dijkstra's ❌
-- Bellman-Ford ✅
+- Bellman-Ford algorithm ✅
 - A* Search ❌
 - Floyd-Warshall ❌
 - Bridges ❌
 - Articulation points ❌
 - Tarjans Strongly Connected Components ❌
-- Kahn's ➖
+- Kahn's algorithm ✅
 - Nearest neighbor ❌
 - Traveling Salesman Problem ❌
 - Eulerian path ❌
-- Kruskal's ➖
+- Kruskal's algorithm ➖
 - Prim's (Lazy version) ❌ 
 - Eager Prim's ❌
 - Max Flow Ford Fulkerson ❌
