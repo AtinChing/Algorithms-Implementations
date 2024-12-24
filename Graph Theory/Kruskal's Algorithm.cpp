@@ -4,47 +4,44 @@
 #include <iostream>
 #include <unordered_map>
 #include <deque>
+#include <algorithm>
 using namespace std;
 struct Edge{
     GraphNode* nodeA;
     GraphNode* nodeB;
     int distance;
-}
-vector<GraphNode*> Kruskals(GraphNode* nodes[], set<int> included = {}){
+};
+vector<Edge> Kruskals(GraphNode* nodes[], set<int> included = {}){
+    vector<Edge> edges;
     for(auto node : nodes){
         for(auto pair: node->adj){
             Edge edge = {node, pair.first, pair.second};
-            edges
+            edges.push_back(edge);
         }
     }
-    GraphNode* prev[dist_len] = {nullptr};
-    int nodesCount = dist_len;
-    int edges = 0;
-    for (int i = 0; i < nodesCount; i ++){
-        edges+=nodes[i]->adj.size();
+    sort(edges.begin(), edges.end(), [](Edge e1, Edge e2){return e1.distance < e2.distance;});
+    set<Edge> approvedEdges = {};
+    for(auto edge : edges){
+        if(included.find(edge.nodeA) == included.end() && included.find(edge.nodeB) == included.end()){
+            approvedEdges.insert(edge);
+        }
     }
-    for(int j = 0; j < edges-1; j ++){
-        for(int i = 0; i < nodesCount; i++){
-            auto curNode = nodes[i];
-            for(pair<GraphNode*, int> nodePair : curNode->adj){
-                auto nodeTo = nodePair.first;
-                auto distToNode = nodePair.second;
-                if(dist[nodeTo->val] > distToNode+dist[curNode->val]){
-                    dist[nodeTo->val] = distToNode+dist[curNode->val];
-                    prev[nodeTo->val] = curNode; 
-                }
+    vector<Edge> retEdges= {};
+    for (int i = 0; i < approvedEdges.size(); i++)
+    {
+        retEdges.push_back(approvedEdges[i]);
+    }
+    return retEdges;
+    
+    /*for(auto node : nodes){
+        for(auto pair : node->adj){
+            Edge edge = {node, pair.first, pair.second};
+            if(approvedEdges.find(edge) == approvedEdges.end()){
+                node->removeEdge(pair.first, pair.second);
             }
         }
-    }
-    // path reconstruction
-    auto curNode = node_path_to_get;
-    vector<GraphNode*> path;
-    while(prev[curNode->val] != nullptr){
-        path.insert(path.begin(), curNode);
-        curNode = prev[curNode->val];
-    }
-    path.insert(path.begin(), curNode);
-    return path;    
+    }*/
+      
 
 }
 
@@ -75,16 +72,11 @@ int main(){
     E->addEdge(H, 9);
     F->addEdge(H, 1);
     G->addEdge(H, 2);
-    set<int> visited;
-    int distance[nodesCount];
-    for(int i = 0; i < nodesCount; i++){
-        distance[i] = INT_MAX;
-    }
-    auto nodeWeWant = E; 
-    auto path = BellmanFord(nodes, distance, nodesCount, nodeWeWant);
-    cout << "path found from start to end node of size " << distance[nodeWeWant->val] << "." << endl;
-    for(int i = 0; i < path.size(); i++){
-        cout << path[i]->val << " ";
+    auto mstEdges = Kruskals(nodes);
+    cout << "Found an MST that contains the following edges:" << endl;
+    for(int i = 0; i < mstEdges.size(); i++){
+        Edge edge = mstEdges[i];
+        cout << edge.nodeA << " TO " << edge.nodeB << " WITH DISTANCE " << edge.distance << endl;
     }
     return 0;
 }
