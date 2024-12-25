@@ -11,27 +11,25 @@ struct Edge{
     GraphNode* nodeB;
     int distance;
 };
-vector<Edge> Kruskals(GraphNode* nodes[], set<int> included = {}){
+vector<Edge> Kruskals(GraphNode* nodes[], int num_nodes, set<GraphNode*> included = {}){
     vector<Edge> edges;
-    for(auto node : nodes){
+    for(int i = 0; i < num_nodes; i++){
+        auto node = nodes[i];
         for(auto pair: node->adj){
             Edge edge = {node, pair.first, pair.second};
             edges.push_back(edge);
         }
     }
     sort(edges.begin(), edges.end(), [](Edge e1, Edge e2){return e1.distance < e2.distance;});
-    set<Edge> approvedEdges = {};
+    vector<Edge> approvedEdges = {};
     for(auto edge : edges){
-        if(included.find(edge.nodeA) == included.end() && included.find(edge.nodeB) == included.end()){
-            approvedEdges.insert(edge);
+        if(included.find(edge.nodeA) == included.end() || included.find(edge.nodeB) == included.end()){
+            approvedEdges.push_back(edge);
+            included.insert(edge.nodeA);
+            included.insert(edge.nodeB);
         }
     }
-    vector<Edge> retEdges= {};
-    for (int i = 0; i < approvedEdges.size(); i++)
-    {
-        retEdges.push_back(approvedEdges[i]);
-    }
-    return retEdges;
+    return approvedEdges;
     
     /*for(auto node : nodes){
         for(auto pair : node->adj){
@@ -72,11 +70,11 @@ int main(){
     E->addEdge(H, 9);
     F->addEdge(H, 1);
     G->addEdge(H, 2);
-    auto mstEdges = Kruskals(nodes);
+    auto mstEdges = Kruskals(nodes, nodesCount);
     cout << "Found an MST that contains the following edges:" << endl;
     for(int i = 0; i < mstEdges.size(); i++){
         Edge edge = mstEdges[i];
-        cout << edge.nodeA << " TO " << edge.nodeB << " WITH DISTANCE " << edge.distance << endl;
+        cout << edge.nodeA->val << " TO " << edge.nodeB->val << " WITH DISTANCE " << edge.distance << endl;
     }
     return 0;
 }
