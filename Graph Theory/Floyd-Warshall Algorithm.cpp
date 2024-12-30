@@ -6,6 +6,7 @@
 #include <deque>
 #include <algorithm>
 using namespace std;
+// Don't use extremely big graphs due to Floyd-Warshall's O(V^3) complexity
 int FloydWarshall(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, GraphNode* nodeTo){
     int k = num_nodes;
     int distance[k][k][k];
@@ -14,29 +15,24 @@ int FloydWarshall(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, GraphN
         {
             for (int j = 0; j < k; j++)
             {
-                distance[k][i][j] = 10000000;
+                distance[k1][i][j] = 10000000;
             }
-            
         }
-        
     }  
     for(int i = 0; i < num_nodes; i++){
+        GraphNode* node = nodes[i];
         for(pair<GraphNode*, int> nodeToPair: node->adj){
-            distance[node->val][nodeToPair.first->val] = nodeToPair.second; 
+            distance[0][node->val][nodeToPair.first->val] = nodeToPair.second; 
         }
     }
     for(int k1 = 1; k1 < k; k1++){
-        for (int i = 0; i < k; i++)
-        {
-            for (int j = 0; j < k; j++)
-            {
-                distance[k][i][j] = min(distance[k-1][i][j], dp[k-1][i][k] + dp[k-1][k][j]);
-            }
-            
+        for (int i = 0; i < k; i++){
+            for (int j = 0; j < k; j++){
+                distance[k1][i][j] = min(distance[k1-1][i][j], distance[k1-1][i][k1] + distance[k1-1][k1][j]);
+            }   
         }
-        
     }      
-    return distance[nodeFrom->val][nodeTo->val];
+    return distance[num_nodes-1][nodeFrom->val][nodeTo->val];
 }
 
 int main(){
