@@ -39,7 +39,7 @@ List of algorithms contained in this repository (so far):
 - Articulation points ❌
 - Tarjans Strongly Connected Components ❌
 - Kahn's algorithm ✅
-- Nearest neighbor ❌
+- Nearest neighbor ➖
 - Traveling Salesman Problem ❌
 - Eulerian path ❌
 - Kruskal's algorithm ➖
