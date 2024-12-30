@@ -14,13 +14,13 @@ int FloydWarshall(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, GraphN
         {
             for (int j = 0; j < k; j++)
             {
-                distance[k][i][j] = 10**7;
+                distance[k][i][j] = 10000000;
             }
             
         }
         
     }  
-    for(GraphNode* node : nodes){
+    for(int i = 0; i < num_nodes; i++){
         for(pair<GraphNode*, int> nodeToPair: node->adj){
             distance[node->val][nodeToPair.first->val] = nodeToPair.second; 
         }
