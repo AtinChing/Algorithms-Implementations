@@ -6,20 +6,24 @@
 #include <deque>
 #include <algorithm>
 using namespace std;
-vector<GraphNode*> NearestNeighbor(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, GraphNode* nodeTo, set<int> visited = {}){
+vector<GraphNode*> NearestNeighbor(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, GraphNode* nodeTo, int* size, set<int> visited = {}){
     auto curNode = nodeFrom;
-
+    vector<GraphNode*> path = {};
     while(curNode){
         int smalli = 0;
         int i = 0;
         for(pair<GraphNode*, int> nodeNext: curNode->adj){
-            if(curNode->adj[smalli].second > nodeNext.second){
+            if(curNode->adj[smalli].second > nodeNext.second && visited.find(curNode) == visited.end()){
                 smalli = i;
             }
             i++;
         }
-
+        path.push_back(curNode);
+        visited.insert(curNode);
+        curNode = curNode->adj[smalli].first;
+        *size += curNode->adj[smalli].second;
     }
+    return path;
 
 }
 
@@ -52,7 +56,13 @@ int main(){
     G->addEdge(H, 2);
     auto node1 = root;
     auto node2 = H;
-    auto res = FloydWarshall(nodes, nodesCount, node1, node2);
-    cout << "Shortest distance between " << node1->val << " and " << node2->val << " is " << res;
+    int size = 0;
+    auto res = NearestNeighbor(nodes, nodesCount, node1, node2, &size);
+    cout << "Nearest neighbor algorithm path:" << endl;
+    for(int i = 0; i < res.size(); i++){
+        cout << res[i]->val << " ";
+    }
+    cout << endl;
+    cout << "size was " << size << endl;
     return 0;
 }
