@@ -97,7 +97,6 @@ int main(){
     H->addEdge(F, 6);
     H->addEdge(G, 8);
     auto node1 = root;
-    auto node2 = H;
     int size = 0;
     auto res = NearestNeighbor(nodes, nodesCount, node1, &size);
     cout << "Nearest neighbor algorithm path:" << endl;
