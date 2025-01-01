@@ -31,7 +31,7 @@ List of algorithms contained in this repository (so far):
 - BFS shortest path on a grid ✅
 - Topological sort (typical DFS) ✅
 - Shortest/longest path on a DAG algorithm ✅
-- Dijkstra's ❌
+- Dijkstra's ➖
 - Bellman-Ford algorithm ✅
 - A* Search ❌
 - Floyd-Warshall algorithm✅
@@ -39,7 +39,7 @@ List of algorithms contained in this repository (so far):
 - Articulation points ❌
 - Tarjans Strongly Connected Components ❌
 - Kahn's algorithm ✅
-- Nearest neighbor ➖
+- Nearest neighbor algortihm (for TSP)✅
 - Traveling Salesman Problem ❌
 - Eulerian path ❌
 - Kruskal's algorithm ➖
