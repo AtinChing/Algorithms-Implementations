@@ -34,7 +34,7 @@ List of algorithms contained in this repository (so far):
 - Dijkstra's ➖
 - Bellman-Ford algorithm ✅
 - A* Search ❌
-- Floyd-Warshall algorithm✅
+- Floyd-Warshall algorithm ✅
 - Bridges ❌
 - Articulation points ❌
 - Tarjans Strongly Connected Components ❌
