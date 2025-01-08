@@ -16,7 +16,7 @@ List of algorithms contained in this repository (so far):
 - Bubble sort ✅
 - Quick sort ❌
 - Selection sort ✅
-- Insertion sort ❌
+- Insertion sort ✅
 - Radix sort ❌
 - Shell sort ❌
 - Heap sort ❌
