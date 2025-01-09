@@ -10,7 +10,7 @@ List of algorithms contained in this repository (so far):
 - Interpolation search ❌
 - Jump search ✅
 - Exponential search ✅
-- Ternary search ➖
+- Ternary search ✅
 - Fibonacci search ✅
 ### Sorting:
 - Bubble sort ✅

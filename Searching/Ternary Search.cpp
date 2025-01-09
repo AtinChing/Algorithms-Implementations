@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 template <typename T, size_t N>
-int ternarySearch(T (&arr)[], T toFind){
+int ternarySearch(T (&arr)[N], T toFind){
     int length = sizeof(arr)/sizeof(T);
     int mid1 = (length/3);
     int mid2 = (length/3)*2;
