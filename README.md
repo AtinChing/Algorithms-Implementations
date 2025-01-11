@@ -7,7 +7,7 @@ List of algorithms contained in this repository (so far):
 ### Searching:
 - Linear search ✅
 - Binary search ✅
-- Interpolation search ❌
+- Interpolation search ➖
 - Jump search ✅
 - Exponential search ✅
 - Ternary search ✅
@@ -35,8 +35,8 @@ List of algorithms contained in this repository (so far):
 - Bellman-Ford algorithm ✅
 - A* Search ❌
 - Floyd-Warshall algorithm ✅
-- Bridges ❌
-- Articulation points ❌
+- Bridges finder ❌
+- Articulation points finder ❌
 - Tarjans Strongly Connected Components ❌
 - Kahn's algorithm ✅
 - Nearest neighbor algortihm (for TSP) ✅
