@@ -42,7 +42,7 @@ List of algorithms contained in this repository (so far):
 - Nearest neighbor algortihm (for TSP) ✅
 - Traveling Salesman Problem algorithm ➖
 - Eulerian path ❌
-- Kruskal's algorithm ➖
+- Kruskal's algorithm ✅
 - Prim's (Lazy version) ❌ 
 - Eager Prim's ❌
 - Max Flow Ford Fulkerson ❌

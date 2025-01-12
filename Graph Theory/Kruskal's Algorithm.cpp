@@ -1,4 +1,5 @@
 #include "Data Structures used/WeightedGraphNode.h"
+#include "Data Structures used/Union Find.cpp"
 #include <vector>
 #include <set>
 #include <iostream>
@@ -20,17 +21,22 @@ vector<Edge> Kruskals(GraphNode* nodes[], int num_nodes, set<GraphNode*> include
             edges.push_back(edge);
         }
     }
+    UnionFind<GraphNode> uf = UnionFind(num_nodes, &(nodes[0]));
     sort(edges.begin(), edges.end(), [](Edge e1, Edge e2){return e1.distance < e2.distance;});
     vector<Edge> approvedEdges = {};
     for(auto edge : edges){
-        if(included.find(edge.nodeA) == included.end() || included.find(edge.nodeB) == included.end()){
+        if(uf.components() == 1){
+            break;
+        }
+        if(uf.find(*edge.nodeA) != uf.find(*edge.nodeB)){
             approvedEdges.push_back(edge);
             included.insert(edge.nodeA);
             included.insert(edge.nodeB);
+            uf.unify(*edge.nodeA, *edge.nodeB);
         }
     }
     return approvedEdges;
-    
+    // Optional code below to convert the graph into the MST (remove any edges that aren't part of the final MST set of edges)
     /*for(auto node : nodes){
         for(auto pair : node->adj){
             Edge edge = {node, pair.first, pair.second};
@@ -39,13 +45,9 @@ vector<Edge> Kruskals(GraphNode* nodes[], int num_nodes, set<GraphNode*> include
             }
         }
     }*/
-      
-
 }
 
 int main(){
-    // Must be guarantee that the input graph has no cycles, as a DAG can't have cycles anyway.
-
     GraphNode* root = new GraphNode(0);
     GraphNode* B = new GraphNode(1);
     GraphNode* C = new GraphNode(2);
@@ -56,7 +58,6 @@ int main(){
     GraphNode* H = new GraphNode(7);
     GraphNode* nodes[] = {root, B, C, D, E, F, G, H};
     int nodesCount = sizeof(nodes)/sizeof(GraphNode*);
-    // Add the edges
     root->addEdge(B, 3);
     root->addEdge(C, 6);
     B->addEdge(C, 4);
