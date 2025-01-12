@@ -98,7 +98,7 @@ int main(){
     H->addEdge(G, 8);
     auto node1 = root;
     int size = 0;
-    auto res = NearestNeighbor(nodes, nodesCount, node1, &size);
+    auto res = TSP(nodes, nodesCount, node1, &size);
     cout << "Nearest neighbor algorithm path:" << endl;
     for(int i = 0; i < res.size(); i++){
         cout << res[i]->val << " ";
