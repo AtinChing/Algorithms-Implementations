@@ -31,7 +31,8 @@ List of algorithms contained in this repository (so far):
 - BFS shortest path on a grid ✅
 - Topological sort (typical DFS) ✅
 - Shortest/longest path on a DAG algorithm ✅
-- Dijkstra's ➖
+- Dijkstra's algorithm (Lazy) ✅
+- Eager Dijkstra's algorithm (with D-ary heap optimisation) ❌
 - Bellman-Ford algorithm ✅
 - A* Search ❌
 - Floyd-Warshall algorithm ✅
@@ -49,6 +50,6 @@ List of algorithms contained in this repository (so far):
 - Unweighted Bipartite Matching ❌
 - Mice and Owls problem ❌
 - Elementary Math problem ❌
-- Edmonds Karp Algorithm ❌
+- Edmonds Karp algorithm ❌
 - Capacity Scaling ❌
 - Dinic's ❌
