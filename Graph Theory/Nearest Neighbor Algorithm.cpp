@@ -6,7 +6,7 @@
 #include <deque>
 #include <algorithm>
 using namespace std;
-// This is a suboptimal but quick solution yielding algorihtm for the travelling salesman problem.
+// This is a suboptimal but quick solution yielding algorithm for the travelling salesman problem.
 vector<GraphNode*> NearestNeighbor(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, int* size, set<GraphNode*> visited = {}){
     auto curNode = nodeFrom;
     vector<GraphNode*> path = {};
