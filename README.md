@@ -36,7 +36,7 @@ List of algorithms contained in this repository (so far):
 - Bellman-Ford algorithm ✅
 - A* Search ❌
 - Floyd-Warshall algorithm ✅
-- Bridges finder ❌
+- Bridges finder ➖
 - Articulation points finder ❌
 - Tarjan's Strongly Connected Components ❌
 - Kahn's algorithm ✅
@@ -46,6 +46,7 @@ List of algorithms contained in this repository (so far):
 - Kruskal's algorithm ✅
 - Prim's (Lazy version) ❌ 
 - Eager Prim's ❌
+- Kosaraju's ❌
 - Max Flow Ford Fulkerson ❌
 - Unweighted Bipartite Matching ❌
 - Mice and Owls problem ❌
