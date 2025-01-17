@@ -42,7 +42,7 @@ List of algorithms contained in this repository (so far):
 - Kahn's algorithm ✅
 - Nearest neighbor algortihm (for TSP) ✅
 - Travelling Salesman Problem algorithm (DP solution) ➖
-- Eulerian path ➖
+- Eulerian Path finder algorithm ✅
 - Kruskal's algorithm ✅
 - Prim's (Lazy version) ❌ 
 - Eager Prim's ❌
