@@ -1,15 +1,13 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 using namespace std;
 
-int* QuickSort(int n, int arr[], int lower = 0, int upper = -1){
-    if(lower == upper){
+int* QuickSort(int n, int arr[], double lower = 0, double upper = -1){
+    if(lower == upper || upper == -1){
         return arr;
     }
-    if(upper == -1){
-        upper = n-1;
-    }
-    int pivot = ((upper-lower)+2)/2;
+    int pivot = std::round(((upper-lower)+1.0)/2.0);
     int j = lower;
     int copiedArray[n];
     int pivotElem = arr[pivot];
@@ -45,7 +43,7 @@ int* QuickSort(int n, int arr[], int lower = 0, int upper = -1){
 int main(){
     int arr[10] = {1,5,6,3,7,2,9,0,10,12};
     int n = sizeof(arr)/sizeof(arr[0]);
-    auto answer = QuickSort(n, arr);
+    auto answer = QuickSort(n, arr, 0, n-1);
     cout << "Sorted all numbers." << endl;
     for(int i = 0; i < n; i++) {
         cout << answer[i] << endl;
