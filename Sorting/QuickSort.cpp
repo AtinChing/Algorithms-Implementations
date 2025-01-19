@@ -8,7 +8,7 @@ int* QuickSort(int n, int arr[], double lower = 0, double upper = -1){
         return arr;
     }
     int pivot = std::round(((upper-lower)+1.0)/2.0);
-    int j = lower;
+    int j = 0;
     int copiedArray[n];
     int pivotElem = arr[pivot];
     for(int i = 0; i < n; i++) {
