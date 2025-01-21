@@ -14,7 +14,7 @@ List of algorithms contained in this repository (so far):
 - Fibonacci search ✅
 ### Sorting:
 - Bubble sort ✅
-- Quick sort ➖
+- Quick sort ✅
 - Selection sort ✅
 - Insertion sort ✅
 - Radix sort ❌
