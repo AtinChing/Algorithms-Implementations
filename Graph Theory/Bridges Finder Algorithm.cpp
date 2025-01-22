@@ -1,4 +1,4 @@
-#include "Data Structures used/WeightedGraphNode.h"
+#include "Data Structures used/UndirectedWeightedGraphNode.h"
 #include <vector>
 #include <set>
 #include <iostream>
@@ -11,7 +11,7 @@ struct Edge{
     GraphNode* nodeB;
     int distance;
 };
-void dfs(GraphNode* node, unordered_map<int, int>& mapping, unordered_map<int, int>& id, int& curLL, set<GraphNode*>& visited, vector<Edge>& res){
+void dfs(GraphNode* node, GraphNode* parent, unordered_map<int, int>& mapping, unordered_map<int, int>& id, int& curLL, set<GraphNode*>& visited, vector<Edge>& res){
         if(mapping.find(node->val) == mapping.end()){
             id[node->val] = curLL;
             mapping[node->val] = curLL;
@@ -21,8 +21,8 @@ void dfs(GraphNode* node, unordered_map<int, int>& mapping, unordered_map<int, i
         for(auto nodeToPair : node->adj){
             auto nodeTo = nodeToPair.first;
             auto dist = nodeToPair.second;
-            if(visited.find(nodeTo) == visited.end()){ // if this node wasn't visited
-                dfs(nodeTo, mapping, id, curLL, visited, res);
+            if(visited.find(nodeTo) == visited.end() && nodeTo!=parent){ // if this node wasn't visited
+                dfs(nodeTo, node, mapping, id, curLL, visited, res);
                 if(mapping[nodeTo->val] < mapping[node->val]){
                     mapping[node->val] = mapping[nodeTo->val];
                 }
@@ -45,7 +45,7 @@ vector<Edge> BridgesFinder(GraphNode* nodes[], int num_nodes, set<GraphNode*> vi
     unordered_map<int, int> id;
     int cur = 0;
     vector<Edge> bridgeList;
-    dfs(nodes[0], mapping, id, cur, visited, bridgeList);
+    dfs(nodes[0], nullptr, mapping, id, cur, visited, bridgeList);
     return bridgeList;
 }
 
