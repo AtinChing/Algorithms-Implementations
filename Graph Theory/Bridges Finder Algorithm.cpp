@@ -21,11 +21,10 @@ void dfs(GraphNode* node, GraphNode* parent, unordered_map<int, int>& mapping, u
         for(auto nodeToPair : node->adj){
             auto nodeTo = nodeToPair.first;
             auto dist = nodeToPair.second;
-            if(visited.find(nodeTo) == visited.end() && nodeTo!=parent){ // if this node wasn't visited
+            if(nodeTo==parent) continue;
+            if(visited.find(nodeTo) == visited.end()){ // if this node wasn't visited
                 dfs(nodeTo, node, mapping, id, curLL, visited, res);
-                if(mapping[nodeTo->val] < mapping[node->val]){
-                    mapping[node->val] = mapping[nodeTo->val];
-                }
+                mapping[node->val] = min(mapping[node->val], mapping[nodeTo->val]);
                 if(mapping[nodeTo->val] > id[node->val]){
                     res.push_back({node, nodeTo, dist});
                 }
@@ -33,24 +32,24 @@ void dfs(GraphNode* node, GraphNode* parent, unordered_map<int, int>& mapping, u
             else{
                 cout << mapping[node->val] << endl;
                 cout << id[nodeTo->val] << endl;
-                if(mapping[node->val] > id[nodeTo->val]){
-                    mapping[node->val] = id[nodeTo->val];
-                }
+                mapping[node->val] = min(mapping[node->val], id[nodeTo->val]);
+
             }
         }
-        
 }
 vector<Edge> BridgesFinder(GraphNode* nodes[], int num_nodes, set<GraphNode*> visited = {}){
     unordered_map<int, int> mapping; // mapping of node val to low link value
     unordered_map<int, int> id;
     int cur = 0;
     vector<Edge> bridgeList;
-    dfs(nodes[0], nullptr, mapping, id, cur, visited, bridgeList);
+    for(int i =0; i < num_nodes; i++){
+        dfs(nodes[i], nullptr, mapping, id, cur, visited, bridgeList);
+
+    }
     return bridgeList;
 }
 
 int main(){
-    // Note: bridges finder algorithm needs a connected graph to work.
     GraphNode* root = new GraphNode(0);
     GraphNode* B = new GraphNode(1);
     GraphNode* C = new GraphNode(2);

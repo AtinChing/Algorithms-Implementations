@@ -21,6 +21,7 @@ public:
     // Add an edge to an adjacent node
     void addEdge(GraphNode* neighbor, int weight) {
         adj.push_back(std::make_pair(neighbor, weight));
+        neighbor->adj.push_back({this, weight});
     }
 
     // Remove an edge to a neighbor with a specific weight
@@ -29,5 +30,7 @@ public:
         if (index != -1) {  // Only erase if the edge exists
             adj.erase(adj.begin() + index);
         }
+        neighbor->removeEdge(this, weight);
+        
     }
 };
