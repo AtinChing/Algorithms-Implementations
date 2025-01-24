@@ -30,10 +30,7 @@ void dfs(GraphNode* node, GraphNode* parent, unordered_map<int, int>& mapping, u
                 }
             }
             else{
-                cout << mapping[node->val] << endl;
-                cout << id[nodeTo->val] << endl;
                 mapping[node->val] = min(mapping[node->val], id[nodeTo->val]);
-
             }
         }
 }
