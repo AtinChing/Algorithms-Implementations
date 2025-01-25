@@ -127,7 +127,7 @@ int main(){
     M->addEdge(O, 1);
 
     auto resNodesList3 = ArticulationPointFinder(nodes3, nodesCount3);
-    cout << "Test Case 3 Articulation Points:" << endl;
+    cout << "Here are all the articulation points found in the given graph:" << endl;
     for(auto node : resNodesList3){
         cout << "NODE " << node->val << endl;
     }
