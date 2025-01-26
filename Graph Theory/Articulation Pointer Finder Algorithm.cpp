@@ -54,6 +54,7 @@ vector<GraphNode*> ArticulationPointFinder(GraphNode* nodes[], int num_nodes, se
 }
 
 int main(){
+    // Simple graph example
     /*GraphNode* root = new GraphNode(0);
     GraphNode* B = new GraphNode(1);
     GraphNode* C = new GraphNode(2);

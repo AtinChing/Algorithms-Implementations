@@ -37,7 +37,7 @@ List of algorithms contained in this repository (so far):
 - A* Search ❌
 - Floyd-Warshall algorithm ✅
 - Bridges finder algorithm ✅
-- Articulation points finder ➖
+- Articulation points finder algorithm ✅
 - Tarjan's Strongly Connected Components ❌
 - Kahn's algorithm ✅
 - Nearest neighbor algortihm (for TSP) ✅
