@@ -6,7 +6,7 @@
 #include <deque>
 #include <algorithm>
 using namespace std;
-void dfs(GraphNode* node, GraphNode* parent, unordered_map<int, int>& mapping, unordered_map<int, int>& id, int& curLL, set<GraphNode*>& visited, vector<GraphNode*>& res, unordered_map<int, int>& outgoingEdges){
+void dfs(GraphNode* node, GraphNode* parent, unordered_map<int, int>& mapping, unordered_map<int, int>& id, int& curLL, set<GraphNode*>& visited, set<GraphNode*>& res, unordered_map<int, int>& outgoingEdges){
         if(mapping.find(node->val) == mapping.end()){
             id[node->val] = curLL;
             mapping[node->val] = curLL;
@@ -21,7 +21,6 @@ void dfs(GraphNode* node, GraphNode* parent, unordered_map<int, int>& mapping, u
                 outgoingEdges[node->val]++;
                 dfs(nodeTo, node, mapping, id, curLL, visited, res, outgoingEdges);
                 mapping[node->val] = min(mapping[node->val], mapping[nodeTo->val]);
-                
             }
             else{
                 mapping[node->val] = min(mapping[node->val], id[nodeTo->val]);
@@ -31,23 +30,26 @@ void dfs(GraphNode* node, GraphNode* parent, unordered_map<int, int>& mapping, u
             auto nodeTo = nodeToPair.first;
             auto dist = nodeToPair.second;
             if(nodeTo==parent) continue;
-            if(outgoingEdges[node->val] > 1 && mapping[nodeTo->val] == id[node->val]){
-                res.push_back(node);
+            if(parent != nullptr && mapping[nodeTo->val] >= id[node->val]){
+                res.insert(node);
                 break;
             }
         }
-        
+        if(parent == nullptr && outgoingEdges[node->val] > 1){ // the actual case for checking if the number of outgoing edges is more than 1 ONLY applies to the root node (nodes where you potentially start a DFS from). 
+            res.insert(node);
+        }
 }
 vector<GraphNode*> ArticulationPointFinder(GraphNode* nodes[], int num_nodes, set<GraphNode*> visited = {}){
     unordered_map<int, int> mapping; // mapping of node val to low link value
     unordered_map<int, int> id;
     int cur = 0;
-    vector<GraphNode*> nodeList;
+    set<GraphNode*> articulationList;
     unordered_map<int, int> outgoingEdges;
     for(int i =0; i < num_nodes; i++){
-        dfs(nodes[i], nullptr, mapping, id, cur, visited, nodeList, outgoingEdges);
+        dfs(nodes[i], nullptr, mapping, id, cur, visited, articulationList, outgoingEdges);
 
     }
+    vector<GraphNode*> nodeList(articulationList.begin(), articulationList.end());
     return nodeList;
 }
 
@@ -116,7 +118,8 @@ int main(){
     GraphNode* M = new GraphNode(3);
     GraphNode* N = new GraphNode(4);
     GraphNode* O = new GraphNode(5);
-    GraphNode* nodes3[] = {J, K, L, M, N, O};
+    GraphNode* A = new GraphNode(6);
+    GraphNode* nodes3[] = {J, K, L, M, N, O, A};
     int nodesCount3 = sizeof(nodes3)/sizeof(GraphNode*);
 
     J->addEdge(K, 1);
@@ -125,6 +128,7 @@ int main(){
     L->addEdge(M, 1);
     M->addEdge(N, 1);
     M->addEdge(O, 1);
+    N->addEdge(A, 1);
 
     auto resNodesList3 = ArticulationPointFinder(nodes3, nodesCount3);
     cout << "Here are all the articulation points found in the given graph:" << endl;
