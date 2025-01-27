@@ -38,10 +38,10 @@ List of algorithms contained in this repository (so far):
 - Floyd-Warshall algorithm ✅
 - Bridges finder algorithm ✅
 - Articulation points finder algorithm ✅
-- Tarjan's Strongly Connected Components ❌
+- Tarjan's Strongly Connected Components ➖
 - Kahn's algorithm ✅
 - Nearest neighbor algortihm (for TSP) ✅
-- Travelling Salesman Problem algorithm (DP solution) ➖
+- Travelling Salesman Problem algorithm (DP solution) ❌
 - Eulerian Path finder algorithm ✅
 - Kruskal's algorithm ✅
 - Prim's (Lazy version) ❌ 
