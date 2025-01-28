@@ -7,30 +7,27 @@
 #include <algorithm>
 using namespace std;
 vector<GraphNode*> TSP(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, int* size, set<GraphNode*> visited = {}){
-    /*auto curNode = nodeFrom;
-    vector<GraphNode*> path = {};
-    while(curNode){
-        int smalli = -1;
-        int i = 0;
-        for(pair<GraphNode*, int> nodeNext: curNode->adj){
-            if(smalli == -1){ 
-                if(visited.find(nodeNext.first) == visited.end()){
-                    smalli = i;
-                }
+    vector<vector<vector<pair<int, int>>>> dp;
+    for(int i = 0; i < num_nodes; i++){
+        vector<vector<pair<int, int>>> outerrow;
+        for(int j = 0; i < num_nodes; i++){
+            vector<pair<int,int>> innerrow;
+            for(int k = 0; i < num_nodes; i++){
+                innerrow.push_back({1, k});
             }
-            else if(curNode->adj[smalli].second > nodeNext.second && visited.find(nodeNext.first) == visited.end()){
-                smalli = i;
-            }
-            i++;
+            outerrow.push_back(innerrow);        
         }
-        path.push_back(curNode);
-        visited.insert(curNode);
-        if(visited.size() == num_nodes){break;}
-        *size += (curNode->adj)[smalli].second;
-        curNode = curNode->adj[smalli].first;
+        dp.push_back(outerrow);
     }
-    return path;
-    */
+    
+    for(int i = 0; i < num_nodes; i++){
+        auto node = nodes[i];
+        for(auto nodeToPair: node->adj){
+            auto nodeTo = nodeToPair.first;
+            auto dist = nodeToPair.second;
+            
+        }
+    }
 }
 
 int main(){
