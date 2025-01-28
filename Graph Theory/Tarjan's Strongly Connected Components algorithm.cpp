@@ -1,4 +1,4 @@
-#include "Data Structures used/UndirectedWeightedGraphNode.h"
+#include "Data Structures used/WeightedGraphNode.h"
 #include <vector>
 #include <set>
 #include <iostream>
@@ -20,8 +20,9 @@ void dfs(GraphNode* node, unordered_map<int, int>& mapping, unordered_map<int, i
             auto dist = nodeToPair.second;
             if(visited.find(nodeTo) == visited.end()){
                 dfs(nodeTo, mapping, id, curLL, visited, res, stack, stackset);
+                mapping[node->val] = min(mapping[node->val], mapping[nodeTo->val]); // we just visited this node so we can min low link values with it
             }
-            else if(stackset.find(nodeTo) != stackset.end()){ // if node to has been visited and IS on the stack, then we can min low link values with it.
+            else if(stackset.find(nodeTo) != stackset.end()){ // otherwise, if node to has been visited and IS on the stack, then we can min low link values with it.
                 mapping[node->val] = min(mapping[node->val], mapping[nodeTo->val]);
             }
         }
@@ -37,6 +38,7 @@ void dfs(GraphNode* node, unordered_map<int, int>& mapping, unordered_map<int, i
             // pop one more time to ensure that the node, that starts the SCC, is included in the current SCC group
             auto node = stack.back();
             currentSCC.push_back(node);
+            res.push_back(currentSCC);
             stack.pop_back();
             stackset.erase(node);
         }
@@ -49,7 +51,7 @@ vector<vector<GraphNode*>> TarjansStronglyConnectedComponents(GraphNode* nodes[]
     int cur = 0;
     vector<vector<GraphNode*>> stronglyConnectedComponentsList;
     for(int i =0; i < num_nodes; i++){
-        dfs(nodes[i], mapping, id, cur, visited, stronglyConnectedComponentsList, stack, stackset);
+        if(visited.find(nodes[i]) == visited.end()) dfs(nodes[i], mapping, id, cur, visited, stronglyConnectedComponentsList, stack, stackset);
     }
     return stronglyConnectedComponentsList;
 }
