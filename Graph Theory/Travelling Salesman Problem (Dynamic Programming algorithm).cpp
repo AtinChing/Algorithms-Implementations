@@ -7,26 +7,24 @@
 #include <algorithm>
 using namespace std;
 vector<GraphNode*> TSP(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, int* size, set<GraphNode*> visited = {}){
-    vector<vector<vector<pair<int, int>>>> dp;
+    vector<vector<int>> dp;
     for(int i = 0; i < num_nodes; i++){
-        vector<vector<pair<int, int>>> outerrow;
-        for(int j = 0; i < num_nodes; i++){
-            vector<pair<int,int>> innerrow;
-            for(int k = 0; i < num_nodes; i++){
-                innerrow.push_back({1, k});
-            }
-            outerrow.push_back(innerrow);        
+        vector<int> innerrow;
+        for(int j = 0; j < num_nodes; j++){
+            innerrow.push_back(0);
         }
-        dp.push_back(outerrow);
+        dp.push_back(innerrow);
+    }    
+
+    for(auto nodeToPair: nodeFrom->adj){
+        auto nodeTo = nodeToPair.first;
+        auto dist = nodeToPair.second;
+        dp[nodeTo->val][1 << nodeFrom->val | 1 << nodeTo->val] = dist;    
     }
-    
+
     for(int i = 0; i < num_nodes; i++){
         auto node = nodes[i];
-        for(auto nodeToPair: node->adj){
-            auto nodeTo = nodeToPair.first;
-            auto dist = nodeToPair.second;
-            
-        }
+
     }
 }
 
