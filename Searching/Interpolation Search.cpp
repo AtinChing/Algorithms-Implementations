@@ -9,17 +9,28 @@
 using namespace std;
 template <typename T, size_t N>
 int interpolationSearch(T (&arr)[N], T toFind, int low, int high){
-    int length = sizeof(arr)/sizeof(int);
+     if (low > high || toFind < arr[low] || toFind > arr[high]) {
+        return -1;
+    }
+
+    // Avoid division by zero
+    if (arr[high] == arr[low]) {
+        if (toFind == arr[low]) {
+            return low;
+        } else {
+            return -1;
+        }
+    }
     if(low <= high && toFind <= arr[high] && toFind >= arr[low]){
         int pos = low + (((toFind-arr[low])*(high-low))/(arr[high]-arr[low]));
         if(arr[pos] == toFind){
             return pos;
         }
         else if(arr[pos] < toFind){
-            return interpolationSearch(arr, toFind, low, pos-1);
+            return interpolationSearch(arr, toFind, pos+1, high);
         }
         else if(arr[pos] > toFind){
-            return interpolationSearch(arr, toFind, pos+1, high);
+            return interpolationSearch(arr, toFind, low, pos-1);
         }
     }
     return -1;
@@ -38,7 +49,7 @@ int main(){
         cout << "Could not find " << lookFor << " in the array!" << endl;
     }
     else{
-        cout << "Found " << lookFor << " at " << result << " in the array" << endl;
+        cout << "Found " << lookFor << " at index " << result << " in the array" << endl;
     }
     return 0;
 }

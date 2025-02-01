@@ -7,7 +7,7 @@ List of algorithms contained in this repository (so far):
 ### Searching:
 - Linear search ✅
 - Binary search ✅
-- Interpolation search ➖
+- Interpolation search ✅
 - Jump search ✅
 - Exponential search ✅
 - Ternary search ✅
