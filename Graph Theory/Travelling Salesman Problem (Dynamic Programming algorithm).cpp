@@ -24,7 +24,9 @@ vector<GraphNode*> TSP(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, i
 
     for(int i = 0; i < num_nodes; i++){
         auto node = nodes[i];
+        for(auto subset : combinations(r, N)){
 
+        }
     }
 }
 
