@@ -6,6 +6,13 @@
 #include <deque>
 #include <algorithm>
 using namespace std;
+vector<int> combinations(int i, int n){
+    vector<int> combs;
+    return combs;
+}
+bool notIn(int num, int subset){
+    return ((1 << num) & subset) == 0;
+}
 vector<GraphNode*> TSP(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, int* size, vector<vector<int>>& dists, set<GraphNode*> visited = {}){
     vector<vector<int>> dp;
     for(int i = 0; i < num_nodes; i++){
@@ -48,12 +55,7 @@ vector<GraphNode*> TSP(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, i
         }
     }
 }
-vector<int> combinations(int i, int n){
-    
-}
-bool notIn(int num, int subset){
-    return ((1 << num) & subset) == 0;
-}
+
 int main(){
     GraphNode* root = new GraphNode(0);
     GraphNode* B = new GraphNode(1);
