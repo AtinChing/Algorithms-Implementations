@@ -78,7 +78,7 @@ int main(){
     auto node1 = root;
     int size = 0;
     auto res = TSP(nodes, nodesCount, node1, &size, dists);
-    cout << "Nearest neighbor algorithm path:" << endl;
+    cout << "TSP algorithm path:" << endl;
     for(int i = 0; i < res.size(); i++){
         cout << res[i]->val << " ";
     }
