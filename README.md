@@ -20,7 +20,7 @@ List of algorithms contained in this repository (so far):
 - Radix sort ❌
 - Shell sort ❌
 - Heap sort ❌
-- Merge sort ❌
+- Merge sort ➖
 - Bucket sort ❌
 - Tim sort ❌
 - Bozo sort ❌
