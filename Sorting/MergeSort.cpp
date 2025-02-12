@@ -2,25 +2,46 @@
 #include <vector>
 using namespace std;
 
+vector<int> Merge(vector<int> left_arr, vector<int> right_arr){
+    vector<int> res;
+    int left, right = 0;
+    int leftlen = left_arr.size();
+    int rightlen = right_arr.size();
+    while(left < leftlen && right < rightlen){
+        if(left_arr[left] <= right_arr[right]){
+            res.push_back(left_arr[left]);
+            left++;
+        }
+        else{
+            res.push_back(right_arr[right]);
+            right++;
+        }
+    }
+    while(left != leftlen){
+        res.push_back(left_arr[left]);
+        left++;
+    }
+    while(right != rightlen){
+        res.push_back(right_arr[right]);
+        right++;
+    }
+    return res;
+}
+
 vector<int> MergeSort(int n, int arr[], int low, int high){
     vector<int> res(arr+low, arr+high);
-    if(high-low == 1){    
-        return res;
-    }
-    else if(high-low == 2){
-        if(res[0] > res[1]){
-            int temp = res[0];
-            res[0] = res[1];
-            res[1] = temp;
-        }
-        return res;
+    int len = high-low+1;
+    if(len == 1){
+        auto ret = vector<int>(arr+low, arr+high+1); 
+        return ret;
     }
     int mid = (low+high)/2;
-    vector<int> arr1(arr+low, arr+mid);
-    vector<int> arr2(arr+mid+1, arr+high);
-    vector<int> temp;
-    arr1.insert(arr1.end(), arr2.begin(), arr2.end());
-    return arr1;
+
+    vector<int> arr1 = MergeSort(n, arr, low, mid);
+    vector<int> arr2 = MergeSort(n, arr, mid+1, high);
+    
+    //arr1.insert(arr1.end(), arr2.begin(), arr2.end());
+    return Merge(arr1, arr2);
 }
 
 int main(){
