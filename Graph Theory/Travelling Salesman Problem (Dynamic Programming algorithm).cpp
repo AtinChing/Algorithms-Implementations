@@ -6,9 +6,32 @@
 #include <deque>
 #include <algorithm>
 using namespace std;
-vector<int> combinations(int i, int n){
-    vector<int> combs;
+vector<int> combinations(int i, int n){ // so we want to generate combinations which are of size n and specifically have i bits set to 1.
+    vector<int> combs; // remember that one combination of bits just makes up an integer, so our combinations is just stored as a vector/collection of integers.
+    combinations(0, 0, i, n, combs);
     return combs;
+}
+vector<int> combinations(int curSet, int at, int r, int n, vector<int>& combs){ 
+    if (r == 0){ // if we need to place none, then that means we've reached the base case/a valid state for the set to be added to our list of combinations
+        for(int i = at; i < n; i++){
+            curSet = curSet | (1 << i); // this flips the ith bit.
+            combinations(curSet, i+1, r-1, n, combs);
+            curSet = curSet & ~(1 << i); // backtracking and setting this bit's value back to what it originally was.
+        }
+    }
+}
+int findMinCost(vector<vector<int>>& dists, vector<vector<int>>& dp, int start, int num_nodes){
+    // end state is the bit mask
+    int endState = (1 << num_nodes) - 1;
+    int minTourCost = INT_MAX;
+    for(int i = 0; i < num_nodes; i++){
+        if(i == start) continue;
+        int tourCost = dp[i][endState] + dists[i][start]; // checking with every possible combination of looping our last/end node back to the start node
+        minTourCost = min(minTourCost, tourCost);
+    }
+    return minTourCost;
+}
+int findOptimalTour(vector<vector<int>>& dists, vector<vector<int>>& dp, int start, int num_nodes){
 }
 bool notIn(int num, int subset){
     return ((1 << num) & subset) == 0;
@@ -32,7 +55,7 @@ vector<GraphNode*> TSP(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, i
     for(int i = 0; i < num_nodes; i++){
         auto node = nodes[i];
         for(int subset : combinations(i, num_nodes)){
-            if (notIn(nodeFrom->val, subset)){ // we only check combinations for when our start node is included lmao
+            if (notIn(nodeFrom->val, subset)){ // we only check combinations for when our start node is included
                 for(int next = 0; next < num_nodes; next++){
                     auto nextNode = nodes[next];
                     if(nextNode == nodeFrom || notIn(next, subset)){
