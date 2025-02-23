@@ -5,13 +5,9 @@
 #include <unordered_map>
 #include <deque>
 #include <algorithm>
+#include <utility>
 using namespace std;
-vector<int> combinations(int i, int n){ // so we want to generate combinations which are of size n and specifically have i bits set to 1.
-    vector<int> combs; // remember that one combination of bits just makes up an integer, so our combinations is just stored as a vector/collection of integers.
-    combinations(0, 0, i, n, combs);
-    return combs;
-}
-vector<int> combinations(int curSet, int at, int r, int n, vector<int>& combs){ 
+void combinations(int curSet, int at, int r, int n, vector<int>& combs){ 
     if (r == 0){ // if we need to place none, then that means we've reached the base case/a valid state for the set to be added to our list of combinations
         for(int i = at; i < n; i++){
             curSet = curSet | (1 << i); // this flips the ith bit.
@@ -20,6 +16,15 @@ vector<int> combinations(int curSet, int at, int r, int n, vector<int>& combs){
         }
     }
 }
+vector<int> combinations(int i, int n){ // so we want to generate combinations which are of size n and specifically have i bits set to 1.
+    vector<int> combs; // remember that one combination of bits just makes up an integer, so our combinations is just stored as a vector/collection of integers.
+    combinations(0, 0, i, n, combs);
+    return combs;
+}
+bool notIn(int num, int subset){
+    return ((1 << num) & subset) == 0;
+}
+
 int findMinCost(vector<vector<int>>& dists, vector<vector<int>>& dp, int start, int num_nodes){
     // end state is the bit mask
     int endState = (1 << num_nodes) - 1;
@@ -31,12 +36,29 @@ int findMinCost(vector<vector<int>>& dists, vector<vector<int>>& dp, int start, 
     }
     return minTourCost;
 }
-int findOptimalTour(vector<vector<int>>& dists, vector<vector<int>>& dp, int start, int num_nodes){
+vector<int> findOptimalTour(vector<vector<int>>& dists, vector<vector<int>>& dp, int start, int num_nodes){
+    int lastIndex = start;
+    int state = (1 << num_nodes) - 1;
+    vector<int> tour(num_nodes+1);
+    for(int i = num_nodes-1; i >= 1; i--){
+        int index = -1;
+        for(int j = 0; j < num_nodes; j++){
+            if(j == start || notIn(j, state)) continue;
+            if(index == -1) index = j;
+            int prevDist = dp[index][state] + dists[index][lastIndex];
+            int newDist = dp[j][state] + dists[j][lastIndex];
+            if(newDist<prevDist) index = j;
+        }
+        tour[i] = index;
+        state = state ^ (1 << index);
+        lastIndex = index;
+    }
+    tour[0] = start;
+    tour[num_nodes] = start;
+    return tour; 
 }
-bool notIn(int num, int subset){
-    return ((1 << num) & subset) == 0;
-}
-vector<GraphNode*> TSP(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, int* size, vector<vector<int>>& dists, set<GraphNode*> visited = {}){
+
+pair<int, vector<int>> TSP(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, int* size, vector<vector<int>>& dists, set<GraphNode*> visited = {}){
     vector<vector<int>> dp;
     for(int i = 0; i < num_nodes; i++){
         vector<int> innerrow;
@@ -77,6 +99,10 @@ vector<GraphNode*> TSP(GraphNode* nodes[], int num_nodes, GraphNode* nodeFrom, i
             }
         }
     }
+    int minCost = findMinCost(dists, dp, nodeFrom->val, num_nodes);
+    vector<int> tour = findOptimalTour(dists, dp, nodeFrom->val, num_nodes);
+    return std::make_pair(minCost, tour);
+
 }
 
 int main(){
@@ -89,6 +115,76 @@ int main(){
     GraphNode* G = new GraphNode(6);
     GraphNode* H = new GraphNode(7);
     GraphNode* nodes[] = {root, B, C, D, E, F, G, H};
+    root->addEdge(B, 12);
+    root->addEdge(C, 7);
+    root->addEdge(D, 19);
+    root->addEdge(E, 3);
+    root->addEdge(F, 15);
+    root->addEdge(G, 9);
+    root->addEdge(H, 11);
+
+    // From B (1)
+    B->addEdge(root, 12);
+    B->addEdge(C, 5);
+    B->addEdge(D, 17);
+    B->addEdge(E, 8);
+    B->addEdge(F, 13);
+    B->addEdge(G, 4);
+    B->addEdge(H, 20);
+
+    // From C (2)
+    C->addEdge(root, 7);
+    C->addEdge(B, 5);
+    C->addEdge(D, 10);
+    C->addEdge(E, 16);
+    C->addEdge(F, 2);
+    C->addEdge(G, 18);
+    C->addEdge(H, 6);
+
+    // From D (3)
+    D->addEdge(root, 19);
+    D->addEdge(B, 17);
+    D->addEdge(C, 10);
+    D->addEdge(E, 14);
+    D->addEdge(F, 11);
+    D->addEdge(G, 1);
+    D->addEdge(H, 15);
+
+    // From E (4)
+    E->addEdge(root, 3);
+    E->addEdge(B, 8);
+    E->addEdge(C, 16);
+    E->addEdge(D, 14);
+    E->addEdge(F, 9);
+    E->addEdge(G, 12);
+    E->addEdge(H, 7);
+
+    // From F (5)
+    F->addEdge(root, 15);
+    F->addEdge(B, 13);
+    F->addEdge(C, 2);
+    F->addEdge(D, 11);
+    F->addEdge(E, 9);
+    F->addEdge(G, 20);
+    F->addEdge(H, 4);
+
+    // From G (6)
+    G->addEdge(root, 9);
+    G->addEdge(B, 4);
+    G->addEdge(C, 18);
+    G->addEdge(D, 1);
+    G->addEdge(E, 12);
+    G->addEdge(F, 20);
+    G->addEdge(H, 13);
+
+    // From H (7)
+    H->addEdge(root, 11);
+    H->addEdge(B, 20);
+    H->addEdge(C, 6);
+    H->addEdge(D, 15);
+    H->addEdge(E, 7);
+    H->addEdge(F, 4);
+    H->addEdge(G, 13);
     int nodesCount = sizeof(nodes)/sizeof(GraphNode*);
     vector<vector<int>> dists;
         for(int i = 0; i < nodesCount; i++){
@@ -101,11 +197,13 @@ int main(){
     auto node1 = root;
     int size = 0;
     auto res = TSP(nodes, nodesCount, node1, &size, dists);
+    auto path = res.second;
+    int pathSize = res.first;
     cout << "TSP algorithm path:" << endl;
-    for(int i = 0; i < res.size(); i++){
-        cout << res[i]->val << " ";
+    for(int i = 0; i < path.size(); i++){
+        cout << path[i] << " ";
     }
     cout << endl;
-    cout << "size was " << size << endl;
+    cout << "size was " << pathSize << endl;
     return 0;
 }
