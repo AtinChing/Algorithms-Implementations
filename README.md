@@ -21,7 +21,7 @@ List of algorithms contained in this repository (so far):
 - Shell sort ❌
 - Heap sort ❌
 - Merge sort ✅
-- Bucket sort ❌
+- Bucket sort ✅
 - Tim sort ❌
 - Bozo sort ❌
 ### Graph Theory:
