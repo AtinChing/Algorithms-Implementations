@@ -37,7 +37,7 @@ void combinations(int curSet, int at, int r, int n, vector<int>& combs){
 }
 vector<int> combinations(int i, int n){ // so we want to generate combinations which are of size n and specifically have i bits set to 1.
     vector<int> combs; // remember that one combination of bits just makes up an integer, so our combinations is just stored as a vector/collection of integers.
-    //combs.reserve(10000);
+    combs.reserve(10000);
     combinations(0, 0, i, n, combs);
     return combs;
 }
