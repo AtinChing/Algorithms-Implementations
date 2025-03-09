@@ -10,6 +10,10 @@ public:
     int getInd(GraphNode* neighbor, int weight){
         for(int i = 0; i < adj.size(); i++){if(adj[i].first == neighbor && adj[i].second == weight) return i;}
     }
+    int getInd(GraphNode* neighbor){
+        for(int i = 0; i < adj.size(); i++){if(adj[i].first == neighbor) return i;}
+
+    }
     // Add an edge to an adjacent node
     void addEdge(GraphNode* neighbor, int weight) {
         adj.push_back(std::make_pair(neighbor, weight));
