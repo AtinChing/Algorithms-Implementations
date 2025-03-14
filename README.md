@@ -1,4 +1,16 @@
-# Algorithms Implementations
+# Algorithms Implementations in C++
+
+This repository contains various algorithms implemented in C++ for educational and practical purposes. The implementations cover topics from data structures, searching, sorting, graph theory, linear programming, DP, greedy, combinatorics (optimization), string and much more.
+
+## Table of Contents
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [Algorithms Implemented](#algorithms-implemented)
+4. [Contributing](#contributing)
+5. [License](#license)
+6. [Troubleshooting](#troubleshooting)
+
+
 Contains implementations of many different algorithms (sorting, searching, graph theory, linear programming, DP, greedy, combinatorics (optimization), string) in C++.
 Any use of abstract data types in this repository makes use of data structures I have previously defined and implemented in my [Data Structures Implementations](https://github.com/AtinChing/Data-Structures-Implementations) repository.
 Algorithm implementation status will be shown by ✅❌➖ (Complete, Incomplete, Ongoing).
