@@ -44,7 +44,7 @@ List of algorithms contained in this repository (so far):
 - Topological sort (typical DFS) ✅
 - Shortest/longest path on a DAG algorithm ✅
 - Dijkstra's algorithm (Lazy) ✅
-- Eager Dijkstra's algorithm (with D-ary heap optimisation) ❌
+- Eager Dijkstra's algorithm (with D-ary heap optimization) ❌
 - Bellman-Ford algorithm ✅
 - A* Search ❌
 - Floyd-Warshall algorithm ✅
@@ -52,7 +52,7 @@ List of algorithms contained in this repository (so far):
 - Articulation points finder algorithm ✅
 - Tarjan's Strongly Connected Components algorithm ✅
 - Kahn's algorithm ✅
-- Nearest neighbor algortihm (for TSP) ✅
+- Nearest neighbor algorithm (for TSP) ✅
 - Travelling Salesman Problem algorithm (DP solution) ➖
 - Eulerian Path finder algorithm ✅
 - Kruskal's algorithm ✅
