@@ -95,29 +95,27 @@ pair<int, vector<int>> TSP(GraphNode* nodes[], int num_nodes, GraphNode* nodeFro
         dp[nodeTo->val][1 << nodeFrom->val | 1 << nodeTo->val] = dist;    
     }
 
-    for(int i = 0; i < num_nodes; i++){
-        auto node = nodes[i];
+    for(int i = 3; i <= num_nodes; i++){
         for(int subset : combinations(i, num_nodes)){ // all combinations which are of size num_nodes and specifically have i bits set to 1.
             // here, combinations would result in something like (for node 0), 000, (for node 1) 001, 010, 100, (for node 2), 110, 101, 011, (for node 3), 111
-            if (notIn(nodeFrom->val, subset)){ // we only check combinations for when our start node is included
-                for(int next = 0; next < num_nodes; next++){
-                    auto nextNode = nodes[next];
-                    if(nextNode == nodeFrom || notIn(next, subset)){
-                        auto state = subset ^ (1 << next); // create a state without the next node were going to add
-                        int minDist = INT_MAX;
-                        for (int end = 0; end < num_nodes; end++){
-                            auto endNode = nodes[end];
-                            if(endNode == nodeFrom || endNode == nodeFrom || notIn(end, subset)){
-                                continue;
-                            }
-                            int newDist = dp[end][state] + dists[end][next];
-                            if(newDist < minDist){
-                                minDist = newDist;
-                            }
-                            dp[next][subset] = minDist;
-                        }
+            if (notIn(nodeFrom->val, subset)) continue; // we only check combinations for when our start node is included
+            for(int next = 0; next < num_nodes; next++){
+                auto nextNode = nodes[next];
+                if(nextNode == nodeFrom || notIn(next, subset)) continue;
+                auto state = subset ^ (1 << next); // create a state without the next node were going to add
+                int minDist = INT_MAX;
+                for (int end = 0; end < num_nodes; end++){
+                    auto endNode = nodes[end];
+                    if(endNode == nodeFrom || endNode == nextNode || notIn(end, subset)){
+                        continue;
                     }
+                    int newDist = dp[end][state] + dists[end][next];
+                    if(newDist < minDist){
+                        minDist = newDist;
+                    }
+                    
                 }
+                dp[next][subset] = minDist;
             }
         }
     }
@@ -211,15 +209,22 @@ int main(){
 
     // setting up adjacency matrix of distances
     vector<vector<int>> dists;
-        for(int i = 0; i < nodesCount; i++){
-            vector<int> innerrow;
-            for(int j = 0; j < nodesCount; j++){
-                if (i != j){
-                innerrow.push_back( nodes[i]->adj[nodes[i]->getInd(nodes[j])].second );
-                }
+    for(int i = 0; i < nodesCount; i++){
+        vector<int> innerrow;
+        for(int j = 0; j < nodesCount; j++){
+            if (i != j){
+            innerrow.push_back( nodes[i]->adj[nodes[i]->getInd(nodes[j])].second );
             }
-            dists.push_back(innerrow);
-        }   
+            else{
+                innerrow.push_back(0); 
+                /* not adding the path from current node (self-loop) to current node caused insane segmentation and memory reading problems as it kept 
+                reading a distance/value outside the bounds of the dists matrix/array when populating the dp table, making it read insanely small values into the dp table, 
+                causing it to completely mess up optimal tour finding and tour cost estimating.
+                */
+            }
+        }
+        dists.push_back(innerrow);
+    }   
     auto node1 = root;
     int size = 0;
     auto res = TSP(nodes, nodesCount, node1, &size, dists);

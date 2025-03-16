@@ -53,7 +53,7 @@ List of algorithms contained in this repository (so far):
 - Tarjan's Strongly Connected Components algorithm ✅
 - Kahn's algorithm ✅
 - Nearest neighbor algorithm (for TSP) ✅
-- Travelling Salesman Problem algorithm (DP solution) ➖
+- Travelling Salesman Problem algorithm (DP solution) ✅
 - Eulerian Path finder algorithm ✅
 - Kruskal's algorithm ✅
 - Prim's (Lazy version) ❌ 
