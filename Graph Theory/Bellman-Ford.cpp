@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <deque>
+#include <climits>
 using namespace std;
 vector<GraphNode*> BellmanFord(GraphNode* nodes[], int dist[], int dist_len, GraphNode* node_path_to_get, set<int> visited = {}){
     dist[nodes[0]->val] = 0; // dist[i] shows lowest distance to node with val i
