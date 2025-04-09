@@ -111,7 +111,7 @@ Algorithm implementation status will be shown by ✅❌➖ (Complete, Incomplete
 - Travelling Salesman Problem algorithm (DP solution) ✅
 - Eulerian Path finder algorithm ✅
 - Kruskal's algorithm ✅
-- Prim's (Lazy version) ❌ 
+- Prim's (Lazy version) ➖ 
 - Eager Prim's ❌
 - Kosaraju's ❌
 - Max Flow Ford Fulkerson ❌
