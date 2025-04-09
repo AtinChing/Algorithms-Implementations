@@ -1,41 +1,33 @@
 #include "Data Structures used/WeightedGraphNode.h"
-#include "Data Structures used/Union Find.cpp"
 #include <vector>
 #include <set>
 #include <iostream>
 #include <unordered_map>
 #include <deque>
 #include <algorithm>
+#include <queue>
 using namespace std;
 struct Edge{
     GraphNode* nodeA;
     GraphNode* nodeB;
     int distance;
 };
-vector<Edge> Prims(GraphNode* nodes[], int num_nodes, set<GraphNode*> included = {}){
-    vector<Edge> edges;
+vector<Edge> Prims(GraphNode* nodes[], int num_nodes, GraphNode* start, set<GraphNode*> included = {}){
+    /*vector<Edge> edges;
     for(int i = 0; i < num_nodes; i++){
         auto node = nodes[i];
         for(auto pair: node->adj){
             Edge edge = {node, pair.first, pair.second};
             edges.push_back(edge);
         }
+    }*/
+    vector<Edge> result;
+    priority_queue<Edge> edges;
+    for (auto nodeToPair : start->adj){
+        edges.push({start, nodeToPair.first, nodeToPair.second});
     }
-    UnionFind<GraphNode> uf = UnionFind(num_nodes, &(nodes[0]));
-    sort(edges.begin(), edges.end(), [](Edge e1, Edge e2){return e1.distance < e2.distance;});
-    vector<Edge> approvedEdges = {};
-    for(auto edge : edges){
-        if(uf.components() == 1){
-            break;
-        }
-        if(uf.find(*edge.nodeA) != uf.find(*edge.nodeB)){
-            approvedEdges.push_back(edge);
-            included.insert(edge.nodeA);
-            included.insert(edge.nodeB);
-            uf.unify(*edge.nodeA, *edge.nodeB);
-        }
-    }
-    return approvedEdges;
+    
+    return result;
     // Optional code below to convert the graph into the MST (remove any edges that aren't part of the final MST set of edges)
     /*for(auto node : nodes){
         for(auto pair : node->adj){
@@ -71,7 +63,7 @@ int main(){
     E->addEdge(H, 9);
     F->addEdge(H, 1);
     G->addEdge(H, 2);
-    auto mstEdges = Prims(nodes, nodesCount);
+    auto mstEdges = Prims(nodes, nodesCount, root);
     cout << "Found an MST that contains the following edges:" << endl;
     for(int i = 0; i < mstEdges.size(); i++){
         Edge edge = mstEdges[i];
