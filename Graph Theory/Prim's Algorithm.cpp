@@ -1,4 +1,4 @@
-#include "Data Structures used/WeightedGraphNode.h"
+#include "Data Structures used/UndirectedWeightedGraphNode.h"
 #include <vector>
 #include <set>
 #include <iostream>
@@ -12,26 +12,33 @@ struct Edge{
     GraphNode* nodeB;
     int distance;
     bool operator<(const Edge& other) const {
+        return distance > other.distance;
+    }
+    bool operator>(const Edge& other) const {
         return distance < other.distance;
     }
 };
-vector<Edge> Prims(GraphNode* nodes[], int num_nodes, GraphNode* start, set<GraphNode*> included = {}){
-    /*vector<Edge> edges;
-    for(int i = 0; i < num_nodes; i++){
-        auto node = nodes[i];
-        for(auto pair: node->adj){
-            Edge edge = {node, pair.first, pair.second};
-            edges.push_back(edge);
-        }
-    }*/
+vector<Edge> Prims(GraphNode* nodes[], int num_nodes, GraphNode* start, set<GraphNode*> visited = {}){
     vector<Edge> result;
     priority_queue<Edge> edges;
     for (auto nodeToPair : start->adj){
         edges.push({start, nodeToPair.first, nodeToPair.second});
     }
-    
+    visited.insert(start);
+    while(!edges.empty()){
+        Edge edge = edges.top();
+        edges.pop();
+        GraphNode* curNode = edge.nodeB;
+        if(visited.find(curNode) != visited.end()) continue; // if we've already visited this node that the edge points TO
+        visited.insert(curNode);
+        result.push_back(edge);
+        for (auto nodeToPair : curNode->adj){
+            if(visited.find((nodeToPair.first)) != visited.end()){ continue; }
+            edges.push({curNode, nodeToPair.first, nodeToPair.second});
+        }
+    }
     return result;
-    // Optional code below to convert the graph into the MST (remove any edges that aren't part of the final MST set of edges)
+    // Optional code below to convert the graph into the MST (remove any edges, from the original source set of nodes in the graph, that aren't part of the final MST set of edges)
     /*for(auto node : nodes){
         for(auto pair : node->adj){
             Edge edge = {node, pair.first, pair.second};
@@ -60,14 +67,18 @@ int main(){
     B->addEdge(E, 11);
     C->addEdge(D, 8);
     C->addEdge(G, 11);
-    D->addEdge(E, -4);
+    D->addEdge(E, 4);
     D->addEdge(G, 2);
     D->addEdge(F, 5);
     E->addEdge(H, 9);
     F->addEdge(H, 1);
     G->addEdge(H, 2);
     auto mstEdges = Prims(nodes, nodesCount, root);
-    cout << "Found an MST that contains the following edges:" << endl;
+    int sum = 0;
+    for(int i = 0; i < mstEdges.size(); i++){
+        sum += mstEdges[i].distance;
+    }
+    cout << "Found an MST, with weight " << sum << ", that contains the following edges:" << endl;
     for(int i = 0; i < mstEdges.size(); i++){
         Edge edge = mstEdges[i];
         cout << edge.nodeA->val << " TO " << edge.nodeB->val << " WITH DISTANCE " << edge.distance << endl;

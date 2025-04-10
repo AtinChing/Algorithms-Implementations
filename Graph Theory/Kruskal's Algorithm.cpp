@@ -1,4 +1,4 @@
-#include "Data Structures used/WeightedGraphNode.h"
+#include "Data Structures used/UndirectedWeightedGraphNode.h"
 #include "Data Structures used/Union Find.cpp"
 #include <vector>
 #include <set>
@@ -65,14 +65,18 @@ int main(){
     B->addEdge(E, 11);
     C->addEdge(D, 8);
     C->addEdge(G, 11);
-    D->addEdge(E, -4);
+    D->addEdge(E, 4);
     D->addEdge(G, 2);
     D->addEdge(F, 5);
     E->addEdge(H, 9);
     F->addEdge(H, 1);
     G->addEdge(H, 2);
     auto mstEdges = Kruskals(nodes, nodesCount);
-    cout << "Found an MST that contains the following edges:" << endl;
+    int sum = 0;
+    for(int i = 0; i < mstEdges.size(); i++){
+        sum += mstEdges[i].distance;
+    }
+    cout << "Found an MST, with weight " << sum << ", that contains the following edges:" << endl;
     for(int i = 0; i < mstEdges.size(); i++){
         Edge edge = mstEdges[i];
         cout << edge.nodeA->val << " TO " << edge.nodeB->val << " WITH DISTANCE " << edge.distance << endl;
