@@ -11,6 +11,9 @@ struct Edge{
     GraphNode* nodeA;
     GraphNode* nodeB;
     int distance;
+    bool operator<(const Edge& other) const {
+        return distance < other.distance;
+    }
 };
 vector<Edge> Prims(GraphNode* nodes[], int num_nodes, GraphNode* start, set<GraphNode*> included = {}){
     /*vector<Edge> edges;
