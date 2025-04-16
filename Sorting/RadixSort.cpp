@@ -42,8 +42,9 @@ vector<int> RadixSort(int n, vector<int> arr){
                 temp/=10;
             }
             pairs.push_back({temp%10, i});
-            arr = CountingSort(n, pairs);
+            
         }
+        arr = CountingSort(n, pairs);
     } 
     return arr;
 }
