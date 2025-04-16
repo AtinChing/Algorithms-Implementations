@@ -84,6 +84,7 @@ Algorithm implementation status will be shown by ✅❌➖ (Complete, Incomplete
 - Quick sort ✅
 - Selection sort ✅
 - Insertion sort ✅
+- Counting sort ✅
 - Radix sort ➖
 - Shell sort ❌
 - Heap sort ❌
