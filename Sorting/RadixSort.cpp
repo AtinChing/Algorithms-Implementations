@@ -1,29 +1,26 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 using namespace std;
 
-vector<int> CountingSort(int n, vector<pair<int, int>> arr){
+vector<int> CountingSort(int n, vector<int> arr, int exp){
     int ma = INT_MIN;
     for(int i = 0; i < n; i++){
-        ma = max(arr[i].first, ma);
+        if(arr[i] > ma) ma = arr[i];
     }
-    vector<int> temp(ma+1);
+    vector<int> indexArr(ma+1); // this is our index array, stores the amount of occurences of each number (number being the index of that array).
     for(int i = 0; i < n; i++){
-        temp[arr[i].first]++;
+        indexArr[(arr[i]/exp)%10]++;
     }
     for(int i = 1; i <= ma; i++){
-        temp[i] += temp[i-1];
+        indexArr[i] += indexArr[i-1];
     }
-    vector<pair<int, int>> sorted_arr(n);
+    vector<int> sortedArr(n);
     for(int i = n-1; i >= 0; i--){
-        sorted_arr[temp[arr[i].first]-1] = arr[i];
-        temp[arr[i].first]--;
+        sortedArr[indexArr[(arr[i]/exp)%10]-1] = arr[i];
+        indexArr[(arr[i]/exp)%10]--;
     }
-    vector<int> res;
-    for(auto pairVals : sorted_arr){
-        res.push_back(pairVals.second);
-    }
-    return res;
+    return sortedArr;
 }
 
 vector<int> RadixSort(int n, vector<int> arr){
@@ -31,21 +28,14 @@ vector<int> RadixSort(int n, vector<int> arr){
     for(int i = 0; i < n; i++){
         ma = max(arr[i], ma);
     }
-    int place = 0;
-    while(ma != 0){
-        ma/=10;
-        place++;
-        vector<pair<int,int>> pairs;
-        for(int i : arr){
-            int temp = i;
-            for(int j = 0; j<place;j++){
-                temp/=10;
-            }
-            pairs.push_back({temp%10, i});
-            
-        }
-        arr = CountingSort(n, pairs);
-    } 
+    int maxDigits = 0;
+    while(ma > 0){
+        ma /= 10;
+        maxDigits++;
+    }
+    for(int i = 0; i < maxDigits; i++){
+        arr = CountingSort(n, arr, pow(10, i));
+    }
     return arr;
 }
 
