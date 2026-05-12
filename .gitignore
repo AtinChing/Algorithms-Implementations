@@ -1,3 +1,4 @@
 *.exe
 .vscode
 testc
+.DS_Store
